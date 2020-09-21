@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,6 +14,21 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  final List<Transaction> transactions = [
+    Transaction(
+      id: 'T1',
+      title: 'Ps5',
+      amount: 399.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 'T2',
+      title: 'New Game',
+      amount: 79.99,
+      date: DateTime.now(),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +45,48 @@ class MyHomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
-          Card(),
+          Column(
+            children: transactions.map((transaction) {
+              return Card(
+                  child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 15,
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      color: Colors.red,
+                      width: 2,
+                    )),
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      transaction.amount.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.red),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        transaction.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                      Text(transaction.date.toString()),
+                    ],
+                  ),
+                ],
+              ));
+            }).toList(),
+          ),
         ],
       ),
     );
